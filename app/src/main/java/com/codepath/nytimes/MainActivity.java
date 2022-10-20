@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.codepath.nytimes.ui.BooksFragment;
 import com.codepath.nytimes.ui.HomeFragment;
+import com.codepath.nytimes.ui.SearchFragment;
 import com.codepath.nytimes.ui.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         // define your fragments here
         final Fragment fragment1 = new HomeFragment();
         final Fragment fragment2 = new SettingsFragment();
+        final Fragment fragment3 = new BooksFragment();
+        final Fragment fragment4 = new SearchFragment();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -39,10 +43,16 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_settings:
                                 fragment = fragment2;
                                 break;
+                            case R.id.action_books:
+                                fragment = fragment3;
+                                break;
+                            case R.id.action_search:
+                                fragment = fragment4;
+                                break;
 //                            case R.id.action_music:
-//                            default:
+                            default:
 //                                fragment = fragment3;
-//                                break;
+                                return true;
                         }
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
                         return true;
