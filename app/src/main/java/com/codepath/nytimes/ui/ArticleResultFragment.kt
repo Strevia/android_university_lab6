@@ -1,8 +1,8 @@
 package com.codepath.nytimes.ui
 
-import android.R
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import com.codepath.nytimes.R
@@ -26,25 +26,17 @@ class ArticleResultFragment: Fragment() {
 
         setHasOptionsMenu(true)
     }
-    fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = getMenuInflater()
-        inflater.inflate(com.codepath.nytimes.R.menu.main, menu)
-        val searchItem: MenuItem = menu.findItem(com.codepath.nytimes.R.id.action_search)
-        val searchView: SearchView = MenuItemCompat.getActionView(searchItem) as SearchView
-        searchView.setOnQueryTextListener(object : OnQueryTextListener() {
-            fun onQueryTextSubmit(query: String?): Boolean {
-                // perform query here
-
-                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
-                // see https://code.google.com/p/android/issues/detail?id=24599
-                searchView.clearFocus()
-                return true
-            }
-
-            fun onQueryTextChange(newText: String?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(com.codepath.nytimes.R.id.action_search).actionView as SearchView
+        item.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //loadNewArticlesByQuery(query)
                 return false
             }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return true
+            }
         })
-        return super.onCreateOptionsMenu(menu)
     }
 }
